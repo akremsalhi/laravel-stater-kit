@@ -4,6 +4,8 @@ includes:
     - phar://phpstan.phar/conf/bleedingEdge.neon
 
 parameters:
+    excludePaths:
+        - config/solo.php
 
     paths:
         - app

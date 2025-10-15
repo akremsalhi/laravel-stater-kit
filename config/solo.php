@@ -1,14 +1,17 @@
 <?php
 
+declare(strict_types=1);
+
 use SoloTerm\Solo\Commands\Command;
 use SoloTerm\Solo\Commands\EnhancedTailCommand;
 use SoloTerm\Solo\Commands\MakeCommand;
 use SoloTerm\Solo\Hotkeys;
+use SoloTerm\Solo\Manager;
 use SoloTerm\Solo\Themes;
 
 // Solo may not (should not!) exist in prod, so we have to
 // check here first to see if it's installed.
-if (!class_exists('\SoloTerm\Solo\Manager')) {
+if (! class_exists(Manager::class)) {
     return [
         //
     ];
@@ -48,16 +51,16 @@ return [
     'commands' => [
         // 'About' => 'php artisan solo:about',
         'HTTP' => 'php artisan serve',
-        'Vite' => 'pnpm dev',
         'Logs' => EnhancedTailCommand::file(storage_path('logs/laravel.log')),
+        'Vite' => 'pnpm dev',
         'Make' => new MakeCommand,
 
         // Lazy commands do not automatically start when Solo starts.
-        'Dumps' => Command::from('php artisan solo:dumps')->lazy(),
-        'Reverb' => Command::from('php artisan reverb:start --debug')->lazy(),
-        'Pint' => Command::from('./vendor/bin/pint --ansi')->lazy(),
-        'Queue' => Command::from('php artisan queue:work')->lazy(),
-        'Tests' => Command::from('composer test --colors=always')->withEnv(['APP_ENV' => 'testing'])->lazy(),
+        'Dumps' => Command::from('php artisan solo:dumps')->lazy(), // @phpstan-ignore-line
+        'Reverb' => Command::from('php artisan reverb:start --debug')->lazy(), // @phpstan-ignore-line
+        'Pint' => Command::from('./vendor/bin/pint --ansi')->lazy(), // @phpstan-ignore-line
+        'Queue' => Command::from('php artisan queue:work')->lazy(), // @phpstan-ignore-line
+        'Tests' => Command::from('composer test --colors=always')->withEnv(['APP_ENV' => 'testing'])->lazy(), // @phpstan-ignore-line
     ],
 
     /**
@@ -79,5 +82,5 @@ return [
      * the dumps. This is the address. You probably don't need to change
      * this unless the default is already taken for some reason.
      */
-    'dump_server_host' => env('SOLO_DUMP_SERVER_HOST', 'tcp://127.0.0.1:9984')
+    'dump_server_host' => env('SOLO_DUMP_SERVER_HOST', 'tcp://127.0.0.1:9984'),
 ];
