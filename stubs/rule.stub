@@ -7,7 +7,7 @@ namespace {{ namespace }};
 use Closure;
 use Illuminate\Contracts\Validation\ValidationRule;
 
-class {{ class }} implements ValidationRule
+final class {{ class }} implements ValidationRule
 {
     /**
      * @param  \Closure(string, ?string=): \Illuminate\Translation\PotentiallyTranslatedString  $fail
